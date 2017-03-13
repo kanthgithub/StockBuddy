@@ -34,14 +34,6 @@ public class StockAPI {
             BigDecimal peg = stock.getStats().getPeg();
             BigDecimal dividend = stock.getDividend().getAnnualYieldPercent();
 
-            System.out.println("Symbol :: "+stock.getSymbol());
-            System.out.println("Price :: "+stock.getQuote().getPrice());
-            System.out.println("High Price :: "+stock.getQuote().getDayHigh());
-            System.out.println("Low Price :: "+stock.getQuote().getDayLow());
-            System.out.println("Volume :: "+stock.getQuote().getVolume());
-            System.out.println("Prev Close :: "+stock.getQuote().getPreviousClose());
-            System.out.println("Open price :: "+stock.getQuote().getOpen());
-
             JSONObject stockObj = new JSONObject();
             try {
                 stockObj.put("Symbol", stock.getSymbol());
@@ -51,6 +43,7 @@ public class StockAPI {
                 stockObj.put("HighPrice", stock.getQuote().getDayHigh());
                 stockObj.put("LowPrice",stock.getQuote().getDayLow());
                 stockObj.put("Volume",stock.getQuote().getVolume());
+                stockObj.put("Change",stock.getQuote().getChangeInPercent());
 
             } catch (JSONException e) {
                 // TODO Auto-generated catch block

@@ -31,11 +31,11 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_search, container, false);
 
-        String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry",
+        /*String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry",
                 "WebOS","Ubuntu","Windows7","Max OS X","Android","IPhone","WindowsMobile","Blackberry"};
         ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(),R.layout.activity_listview, mobileArray);
         listView = (ListView) view.findViewById(R.id.mobile_list);
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter);*/
         return view;
     }
 

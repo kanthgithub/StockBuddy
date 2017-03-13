@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
  * Created by jaipr on 13-03-2017.
  */
@@ -34,6 +36,13 @@ public class Adapter extends ArrayAdapter<String>{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return jsonArray.length();
     }
 
     public class ViewHolder{
@@ -59,18 +68,27 @@ public class Adapter extends ArrayAdapter<String>{
         holder.txtSymbol= (TextView) convertView.findViewById(R.id.stock_symbol);
         holder.txtVolume= (TextView) convertView.findViewById(R.id.stock_volume);
         holder.txtPrice= (TextView) convertView.findViewById(R.id.stock_price);
-        holder.txtChange= (TextView) convertView.findViewById(R.id.stock_price);
+        holder.txtChange= (TextView) convertView.findViewById(R.id.stock_change);
         holder.imgUpDown= (ImageView) convertView.findViewById(R.id.stock_up_down);
         holder.changeLayout= (RelativeLayout) convertView.findViewById(R.id.changeInStock);
 
         try {
             JSONObject jsonObject=jsonArray.getJSONObject(position);
             holder.txtSymbol.setText(jsonObject.get("Symbol").toString());
-            holder.txtVolume.setText(jsonObject.get("Volume").toString());
-            holder.txtPrice.setText(jsonObject.get("Price").toString());
-            holder.txtChange.setText(jsonObject.get("Price").toString());
-            holder.imgUpDown.setImageResource(R.drawable.down);
-            holder.changeLayout.setBackgroundResource(R.drawable.red_shape);
+            holder.txtVolume.setText("Volume : "+jsonObject.get("Volume").toString());
+            holder.txtPrice.setText("$"+jsonObject.get("Price").toString());
+            holder.txtChange.setText(jsonObject.get("Change").toString()+"%");
+            String change=jsonObject.get("Change").toString();
+            if(change.charAt(0)=='-')
+            {
+                holder.imgUpDown.setImageResource(R.drawable.down);
+                holder.changeLayout.setBackgroundResource(R.drawable.red_shape);
+            }
+            else {
+                holder.imgUpDown.setImageResource(R.drawable.up);
+                holder.changeLayout.setBackgroundResource(R.drawable.green_shape);
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();

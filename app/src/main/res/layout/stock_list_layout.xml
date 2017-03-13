@@ -29,7 +29,8 @@
               android:id="@+id/stock_volume"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:text="Volume - 10000"/>
+              android:textSize="10sp"
+              android:text="Volume - 10000000"/>
       </LinearLayout>
     </LinearLayout>
 
@@ -44,8 +45,9 @@
                 android:id="@+id/stock_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_centerHorizontal="false"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
                 android:text="$123.45"/>
         </RelativeLayout>
     </LinearLayout>
