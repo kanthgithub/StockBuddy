@@ -3,7 +3,6 @@ package com.example.jaipr.stockbuddy; /**
  */
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -11,20 +10,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Bean.StockJSON;
 import yahoofinance.Stock;
 
 public class HomeFragment extends Fragment {
 
-    Stock stock;
-    String urlString="http://finance.google.com/finance/info?client=ig&q=NASDAQ%3AAAPL,GOOG,FB";
+    ListView list;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -40,7 +41,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_home, container, false);
-        TextView textView=(TextView) view.findViewById(R.id.textStock);
+
         StockAPI stockAPI=new StockAPI();
         List<String> symbolList = new ArrayList<String>();
         symbolList.add("FB");
@@ -50,12 +51,20 @@ public class HomeFragment extends Fragment {
         symbolList.add("AMZN");
         if(isNetworkAvailable())
         {
-            JSONObject jsonObject=stockAPI.getStock(symbolList);
-            String jsonStr = jsonObject.toString();
-            textView.setText(jsonStr);
+            final JSONObject jsonObject=stockAPI.getStock(symbolList);
+            list= (ListView) view.findViewById(R.id.list);
+            Adapter adapter=new Adapter(getActivity(),jsonObject);
+            list.setAdapter(adapter);
+
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(getContext(),"hello",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
         else {
-            textView.setText("No Connection !");
+
         }
         return view;
     }
