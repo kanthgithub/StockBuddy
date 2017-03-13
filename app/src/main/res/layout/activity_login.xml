@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:background="#263238">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="80dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <!-- App Logo -->
+        <ImageView android:id="@+id/logo"
+            android:src="@drawable/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal" />
+
+        <!--Title TextView-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STOCK BUDDY"
+            android:id="@+id/title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#7B869B"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <!--User Email-->
+        <EditText
+            android:id="@+id/login_email"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:ellipsize="start"
+            android:gravity="center"
+            android:hint="Email"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColorHint="#cccccc"
+            android:textColor="#7B869B"
+            android:maxLength="40"
+            android:maxLines="1"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/edittextshape"/>
+
+        <!-- User Password -->
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:ellipsize="start"
+            android:gravity="center"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:hint="Password"
+            android:textColor="#7B869B"
+            android:textColorHint="#cccccc"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:inputType="textPassword"
+            android:background="@drawable/edittextshape"/>
+
+        <!--Login Button-->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="Login"
+            android:onClick="Login"
+            android:textSize="20sp"
+            android:layout_height="40dp"
+            android:textColor="#ffffff"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5" />
+
+        <!--signup Link TextView-->
+        <TextView android:id="@+id/link_signup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="No account yet? Create one"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:padding="16dp"
+            android:onClick="Register"
+            android:textColor="#7B869B"/>
+
+    </LinearLayout>
+</ScrollView>

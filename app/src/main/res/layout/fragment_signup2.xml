@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:background="#263238">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="80dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <!--Logo ImageView-->
+        <ImageView android:id="@+id/logo"
+            android:src="@drawable/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal" />
+
+        <!--App title TextView-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STOCK BUDDY"
+            android:id="@+id/title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#7B869B"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal"/>
+
+
+        <!-- Email -->
+        <EditText
+            android:id="@+id/input_email"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:ellipsize="start"
+            android:gravity="center"
+            android:hint="Email"
+            android:maxLength="40"
+            android:maxLines="1"
+            android:textColorHint="#cccccc"
+            android:textColor="#7B869B"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/edittextshape"/>
+
+        <!-- Password -->
+        <EditText
+            android:id="@+id/input_password"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:ellipsize="start"
+            android:gravity="center"
+            android:hint="Password"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:textColor="#7B869B"
+            android:textColorHint="#cccccc"
+            android:inputType="textPassword"
+            android:background="@drawable/edittextshape"/>
+
+        <!-- Confirm Password -->
+        <EditText
+            android:id="@+id/input_confirm_password"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:ellipsize="start"
+            android:gravity="center"
+            android:hint="Confirm Password"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:textColor="#7B869B"
+            android:textColorHint="#cccccc"
+            android:inputType="textPassword"
+            android:background="@drawable/edittextshape"/>
+
+        <!--Signup Button-->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="Sign Up"
+            android:onClick="SignUp"
+            android:textSize="20sp"
+            android:layout_height="40dp"
+            android:textColor="#ffffff"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5" />
+
+        <!--Back to login activity TextView-->
+        <TextView android:id="@+id/link_signup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:padding="16dp"
+            android:text="Back to Login"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:onClick="backToLogin"
+            android:textColor="#7B869B"/>
+
+    </LinearLayout>
+</ScrollView>

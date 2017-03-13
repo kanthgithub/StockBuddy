@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:background="#263238"
+    android:id="@+id/signup1">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="80dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <!--Logo ImageView-->
+        <ImageView android:id="@+id/logo"
+            android:src="@drawable/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal" />
+
+        <!--App title TextView-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STOCK BUDDY"
+            android:id="@+id/title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#7B869B"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal"/>
+
+
+        <!-- First Name  -->
+        <EditText
+            android:id="@+id/input_firstName"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:ellipsize="start"
+            android:gravity="center"
+            android:hint="First Name"
+            android:textColorHint="#cccccc"
+            android:textColor="#7B869B"
+            android:inputType="text"
+            android:maxLines="1"
+            android:maxLength="20"
+            android:background="@drawable/edittextshape"/>
+
+        <!-- Last Name -->
+        <EditText
+            android:id="@+id/input_lastName"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:ellipsize="start"
+            android:gravity="center"
+            android:hint="Last Name"
+            android:textColor="#7B869B"
+            android:textColorHint="#cccccc"
+            android:inputType="text"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:background="@drawable/edittextshape"/>
+
+        <!-- Next Button-->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_signUp_next"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="Next"
+            android:onClick="SignupNext"
+            android:textSize="20sp"
+            android:layout_height="40dp"
+            android:textColor="#ffffff"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5" />
+
+        <!-- Back to Login Activity TextView-->
+        <TextView android:id="@+id/link_signup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:padding="16dp"
+            android:text="Back to Login"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:onClick="backToLogin"
+            android:textColor="#7B869B"/>
+
+    </LinearLayout>
+</ScrollView>
