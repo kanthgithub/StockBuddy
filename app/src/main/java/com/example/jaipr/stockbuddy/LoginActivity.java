@@ -33,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        setStock();
+
         TextView stockTitle=(TextView)findViewById(R.id.title);
         Typeface myCustomFont=Typeface.createFromAsset(getAssets(),"fonts/Ubuntu-L.ttf");
         stockTitle.setTypeface(myCustomFont);
@@ -59,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
         if(validateLogin(str_email,str_password))
         {
             setSharedPreferences();
-
             Intent i = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(i);
         }
@@ -126,6 +127,22 @@ public class LoginActivity extends AppCompatActivity {
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         toast.show();
+    }
+
+    public void setStock() {
+        try {
+            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("StockSymbol", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            String[] symbols = new String[]{"INTC", "FB", "TSLA", "NKE", "YHOO", "AMZN", "TCS", "MSFT"};
+
+            for (String symbol : symbols) {
+                editor.putBoolean(symbol, true);
+                editor.commit();
+            }
+        } catch (Exception e) {
+
+        }
     }
 
 }

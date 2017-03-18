@@ -18,12 +18,12 @@ import yahoofinance.histquotes.Interval;
  */
 
 public class StockAPI {
-    public JSONObject getStock(final String[] symbols) {
+    public JSONObject getStock(final String[] symbols, final boolean[] isAdd) {
         JSONArray jsonArray = new JSONArray();
 
         Map<String, Stock> stocks = null;
         List<Stock> stockList = new ArrayList<Stock>();
-
+        int i = 0;
         try {
             stocks = YahooFinance.get(symbols);
         } catch (IOException e) {
@@ -43,14 +43,16 @@ public class StockAPI {
                     stockObj.put("LowPrice", s.getQuote().getDayLow());
                     stockObj.put("Volume", s.getQuote().getVolume());
                     stockObj.put("Change", s.getQuote().getChangeInPercent());
+
                 }
 
             } catch (JSONException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            jsonArray.put(stockObj);
-
+            if (isAdd[i] == true) {
+                jsonArray.put(stockObj);
+            }
+            i++;
         }
 
         JSONObject stockObject = new JSONObject();
