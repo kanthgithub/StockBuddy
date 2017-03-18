@@ -14,10 +14,10 @@
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme"></activity>
+            android:theme="@style/LoginTheme" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignupActivity"
             android:screenOrientation="portrait"
@@ -27,7 +27,7 @@
                 android:value="com.example.jaipr.stockbuddy.LoginActivity" />
         </activity>
         <activity
-            android:name=".ZoomOutActivity"
+            android:name=".FlashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme">
             <intent-filter>
@@ -36,10 +36,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AboutUs"
-            android:theme="@style/LoginTheme"
-            android:screenOrientation="portrait">
-
+        <activity
+            android:name=".AboutUsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme"></activity>
+        <activity
+            android:name=".StockActivity"
+            android:theme="@style/StockTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.jaipr.stockbuddy.MainActivity" />
         </activity>
     </application>
 

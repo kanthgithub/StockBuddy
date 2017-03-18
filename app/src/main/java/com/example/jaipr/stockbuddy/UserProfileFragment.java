@@ -57,14 +57,13 @@ public class UserProfileFragment extends Fragment {
         userGender=(TextView) view.findViewById(R.id.text_user_gender);
         userLocation=(TextView) view.findViewById(R.id.text_user_location);
 
-        user=new User();
         SharedPreferences sharedPreferences=getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         String str_userNameHeader=sharedPreferences.getString("FirstName",null)+" "+sharedPreferences.getString("LastName",null);
         String str_userEmail=sharedPreferences.getString("Email",null);
         String str_userName="Name : "+str_userNameHeader;
-        String str_userAge="Age : "+user.getAge();
-        String str_userGender="Gender : "+user.getGender();
-        String str_userLocation="Location : "+user.getLocation();
+        String str_userAge = "Age : 21";
+        String str_userGender = "Gender : Male";
+        String str_userLocation = "Location : Gujarat";
 
         userName_header.setText(str_userNameHeader);
         userEmail_header.setText(str_userEmail);

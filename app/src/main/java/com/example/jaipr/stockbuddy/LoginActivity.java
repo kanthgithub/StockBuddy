@@ -3,8 +3,6 @@ package com.example.jaipr.stockbuddy;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,13 +76,7 @@ public class LoginActivity extends AppCompatActivity {
     {
         try {
             SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences("UserData",Context.MODE_PRIVATE);
-            if(email.toLowerCase().trim().equals(sharedPreferences.getString("Email",null)) && password.trim().equals(sharedPreferences.getString("Password",null)))
-            {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return email.toLowerCase().trim().equals(sharedPreferences.getString("Email", null)) && password.trim().equals(sharedPreferences.getString("Password", null));
         }
         catch (Exception e)
         {
@@ -124,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
     public void showToast(String str)
     {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_toast,
+        View layout = inflater.inflate(R.layout.layout_custom_toast,
                 (ViewGroup) findViewById(R.id.toast_layout_root));
 
         TextView text = (TextView) layout.findViewById(R.id.text);

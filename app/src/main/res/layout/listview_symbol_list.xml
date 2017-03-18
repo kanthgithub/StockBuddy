@@ -4,6 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="16dp"
-    android:textSize="20sp"
-    android:textColor="#212121">
+    android:textColor="#212121"
+    android:textSize="20sp">
 </TextView>

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,14 +14,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int[] tabIcons = {
             R.mipmap.home,
-            R.mipmap.find,
+            R.mipmap.add,
             R.mipmap.user,
     };
 
@@ -99,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch(item.getItemId()) {
             case R.id.aboutUs:
-                Intent intent = new Intent(this, AboutUs.class);
+                Intent intent = new Intent(this, AboutUsActivity.class);
                 this.startActivity(intent);
                 break;
             case R.id.logout:
@@ -136,6 +133,22 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    public void Logout() {
+        try {
+            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("LoginData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putBoolean("isLogin", false);
+
+            editor.commit();
+
+            Intent intent = new Intent(this, FlashActivity.class);
+            startActivity(intent);
+        } catch (Exception e) {
+
+        }
+    }
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -162,25 +175,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             return null;
-        }
-    }
-
-    public void Logout()
-    {
-        try {
-            SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences("LoginData", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=sharedPreferences.edit();
-
-            editor.putBoolean("isLogin", false);
-
-            editor.commit();
-
-            Intent intent=new Intent(this,ZoomOutActivity.class);
-            startActivity(intent);
-        }
-        catch (Exception e)
-        {
-
         }
     }
 }

@@ -3,6 +3,7 @@ package com.example.jaipr.stockbuddy; /**
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -14,14 +15,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import yahoofinance.Stock;
+import Adapter.StockAdapter;
+import Controller.StockAPI;
 
 public class HomeFragment extends Fragment {
 
@@ -43,23 +41,28 @@ public class HomeFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_home, container, false);
 
         StockAPI stockAPI=new StockAPI();
-        List<String> symbolList = new ArrayList<String>();
-        symbolList.add("FB");
-        symbolList.add("INTC");
-        symbolList.add("MSFT");
-        symbolList.add("NKE");
-        symbolList.add("AMZN");
+
+        String[] symbols = new String[]{"INTC", "FB", "TSLA", "NKE", "YHOO", "AMZN", "TCS", "MSFT"};
         if(isNetworkAvailable())
         {
-            final JSONObject jsonObject=stockAPI.getStock(symbolList);
+            final JSONObject jsonObject = stockAPI.getStock(symbols);
             list= (ListView) view.findViewById(R.id.list);
-            Adapter adapter=new Adapter(getActivity(),jsonObject);
-            list.setAdapter(adapter);
+            StockAdapter stockAdapter = new StockAdapter(getActivity(), jsonObject);
+            list.setAdapter(stockAdapter);
 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(getContext(),"hello",Toast.LENGTH_SHORT).show();
+                    String message = null;
+                    try {
+                        message = jsonObject.getJSONArray("Stock").getJSONObject(position).get("Symbol").toString();
+                        Intent intent = new Intent(getContext(), StockActivity.class);
+                        intent.putExtra("Symbol", message);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                 }
             });
         }

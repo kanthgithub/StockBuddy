@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,41 +13,42 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
-                android:orientation="vertical"
-                android:background="@color/colorPrimary">
+                android:background="@color/colorPrimary"
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/header_cover_image"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp"
                     android:layout_marginTop="10dp"
-                    android:paddingRight="16dp"
+                    android:orientation="horizontal"
                     android:paddingLeft="16dp"
-                    android:layout_marginBottom="16dp">
+                    android:paddingRight="16dp">
 
                     <ImageView
+                        android:id="@+id/back"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        app:srcCompat="@mipmap/back"
-                        android:id="@+id/back"
+                        android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:onClick="BackToMain"
-                        android:layout_centerVertical="true"/>
+                        app:srcCompat="@mipmap/back" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:text="Jaimin Prajapati"
-                        android:textSize="16sp"
-                        android:textColor="#ffffff"/>
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <com.example.jaipr.stockbuddy.RoundedImageView
+
+                    <Controller.RoundedImageView
                         android:id="@+id/user_profile_photo"
                         android:layout_width="@dimen/rounded_image_width_height"
                         android:layout_height="@dimen/rounded_image_width_height"
@@ -60,57 +61,57 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
                     android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:orientation="horizontal">
+                    android:paddingRight="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:background="@drawable/edittextshape"
-                        android:padding="8dp"
-                        android:layout_weight="1"
                         android:layout_marginRight="5dp"
-                        android:onClick="Connect">
+                        android:layout_weight="1"
+                        android:background="@drawable/edittextshape"
+                        android:onClick="Connect"
+                        android:padding="8dp">
 
                         <ImageView
+                            android:id="@+id/earth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@mipmap/earth"
-                            android:id="@+id/earth"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            app:srcCompat="@mipmap/earth" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/ovelshape"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ovelshape"
                         android:onClick="SendMail">
 
                         <ImageView
+                            android:id="@+id/mail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@mipmap/mail"
-                            android:id="@+id/mail"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            app:srcCompat="@mipmap/mail" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_weight="1"
                         android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
                         android:background="@drawable/ovelshape"
-                        android:padding="10dp"
-                        android:onClick="ShareApp">
+                        android:onClick="ShareApp"
+                        android:padding="10dp">
 
                         <ImageView
+                            android:id="@+id/share"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@mipmap/share"
-                            android:id="@+id/share"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            app:srcCompat="@mipmap/share" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -122,37 +123,37 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_layout"
-                android:padding="16dp"
                 android:orientation="vertical"
+                android:padding="16dp"
                 android:paddingBottom="0dp">
 
                 <TextView
                     android:id="@+id/text_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="About App"
                     android:layout_marginBottom="10dp"
                     android:gravity="center_vertical"
+                    android:text="About App"
                     android:textColor="@color/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/about_app1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical" />
                 <TextView
                     android:id="@+id/about_app2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical" />
                 <TextView
                     android:id="@+id/about_app3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical" />
 
             </LinearLayout>
         </LinearLayout>

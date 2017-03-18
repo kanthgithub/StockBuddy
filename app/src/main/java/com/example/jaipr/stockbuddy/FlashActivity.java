@@ -13,29 +13,19 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import Bean.StockJSON;
 
 /**
  * Created by jaipr on 11-03-2017.
  */
 
-public class ZoomOutActivity extends Activity implements Animation.AnimationListener {
+public class FlashActivity extends Activity implements Animation.AnimationListener {
 
-    private TextView txtMessage;
-    private ImageView imageView;
     private static int TIME_OUT=500;
-
     // Animation
     Animation animZoomOut;
     Animation animMove;
-
+    private TextView txtMessage;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,23 +1,20 @@
 package com.example.jaipr.stockbuddy;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class AboutUs extends AppCompatActivity {
+public class AboutUsActivity extends AppCompatActivity {
 
     private ImageView imageViewBack;
     private ImageView imageViewWeb;
@@ -93,10 +90,10 @@ public class AboutUs extends AppCompatActivity {
 
     public void Connect(View view)
     {
-        final Dialog dialog = new Dialog(AboutUs.this);
+        final Dialog dialog = new Dialog(AboutUsActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.setContentView(R.layout.dialog_screen);//setting the dialog xml layout
+        dialog.setContentView(R.layout.layout_dialog_screen);//setting the dialog xml layout
 
         dialog.findViewById(R.id.facebook).setOnClickListener(
                 new View.OnClickListener() {
@@ -146,7 +143,7 @@ public class AboutUs extends AppCompatActivity {
             int versionCode = getPackageManager().getPackageInfo("com.facebook.katana", 0).versionCode;
             if (versionCode >= 3002850) {
                 Uri uri = Uri.parse("fb://facewebmodal/f?href=" + facebookUrl);
-                startActivity(new Intent(Intent.ACTION_VIEW, uri));;
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
             } else {
                 // open the Facebook app using the old method (fb://profile/id or fb://page/id)
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/336227679757310")));

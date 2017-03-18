@@ -3,8 +3,6 @@ package com.example.jaipr.stockbuddy;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,17 +22,23 @@ import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
 
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     private EditText editTextFirstName;
     private EditText editTextLastName;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private EditText editTextConfirmPassword;
-
     private String stringFirstName;
     private String stringLastName;
     private String stringEmail;
     private String stringPassword;
     private String stringConfirmPassword;
+
+    public static boolean validateEmail(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+        return matcher.find();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,29 +159,15 @@ public class SignupActivity extends AppCompatActivity {
        }
     }
 
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
-    public static boolean validateEmail(String emailStr) {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
-        return matcher.find();
-    }
-
     public boolean isRequire(String s)
     {
-        if(s.equals("") || s==null)
-        {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return s.equals("") || s == null;
     }
 
     public void showToast(String str)
     {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_toast,
+        View layout = inflater.inflate(R.layout.layout_custom_toast,
                 (ViewGroup) findViewById(R.id.toast_layout_root));
 
         TextView text = (TextView) layout.findViewById(R.id.text);

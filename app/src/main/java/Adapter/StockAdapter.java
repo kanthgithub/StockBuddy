@@ -1,9 +1,6 @@
-package com.example.jaipr.stockbuddy;
+package Adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.icu.math.BigDecimal;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,23 +10,24 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.jaipr.stockbuddy.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 /**
  * Created by jaipr on 13-03-2017.
  */
 
-public class Adapter extends ArrayAdapter<String>{
+public class StockAdapter extends ArrayAdapter<String> {
 
     JSONArray jsonArray;
     Context context;
     LayoutInflater inflater;
-    public Adapter(Context context, JSONObject jsonObject) {
-        super(context, R.layout.stock_list_layout);
+
+    public StockAdapter(Context context, JSONObject jsonObject) {
+        super(context, R.layout.listview_stock_list);
         try {
             this.context=context;
             this.jsonArray=jsonObject.getJSONArray("Stock");
@@ -45,15 +43,6 @@ public class Adapter extends ArrayAdapter<String>{
         return jsonArray.length();
     }
 
-    public class ViewHolder{
-        TextView txtSymbol;
-        TextView txtVolume;
-        TextView txtPrice;
-        TextView txtChange;
-        ImageView imgUpDown;
-        RelativeLayout changeLayout;
-    }
-
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -61,7 +50,7 @@ public class Adapter extends ArrayAdapter<String>{
         if(convertView==null)
         {
             inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView=inflater.inflate(R.layout.stock_list_layout,null);
+            convertView = inflater.inflate(R.layout.listview_stock_list, null);
         }
 
         final ViewHolder holder=new ViewHolder();
@@ -94,5 +83,14 @@ public class Adapter extends ArrayAdapter<String>{
             e.printStackTrace();
         }
         return convertView;
+    }
+
+    public class ViewHolder {
+        TextView txtSymbol;
+        TextView txtVolume;
+        TextView txtPrice;
+        TextView txtChange;
+        ImageView imgUpDown;
+        RelativeLayout changeLayout;
     }
 }

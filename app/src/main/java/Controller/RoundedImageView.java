@@ -1,4 +1,4 @@
-package com.example.jaipr.stockbuddy;
+package Controller;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,28 +19,6 @@ import android.widget.ImageView;
 public class RoundedImageView extends ImageView {
     public RoundedImageView(Context ctx, AttributeSet attrs){
         super(ctx,attrs);
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas){
-        Drawable drawable=getDrawable();
-
-        if(drawable==null)
-        {
-            return;
-        }
-
-        if(getWidth()==0 || getHeight()==0){
-            return;
-        }
-
-        Bitmap b=((BitmapDrawable)drawable).getBitmap();
-        Bitmap bitmap=b.copy(Bitmap.Config.ARGB_8888, true);
-
-        int w=getWidth(),h=getHeight();
-
-        Bitmap roundBitmap=getRoundedCroppedBitmap(bitmap,w);
-        canvas.drawBitmap(roundBitmap, 0, 0, null);
     }
 
     public static Bitmap getRoundedCroppedBitmap(Bitmap bitmap,int radius){
@@ -72,5 +50,26 @@ public class RoundedImageView extends ImageView {
         canvas.drawBitmap(finalBitmap, rect, rect, paint);
 
         return output;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        Drawable drawable = getDrawable();
+
+        if (drawable == null) {
+            return;
+        }
+
+        if (getWidth() == 0 || getHeight() == 0) {
+            return;
+        }
+
+        Bitmap b = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+
+        int w = getWidth(), h = getHeight();
+
+        Bitmap roundBitmap = getRoundedCroppedBitmap(bitmap, w);
+        canvas.drawBitmap(roundBitmap, 0, 0, null);
     }
 }
