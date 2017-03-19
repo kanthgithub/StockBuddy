@@ -65,23 +65,6 @@ public class MainActivity extends AppCompatActivity {
         Typeface myCustomFont=Typeface.createFromAsset(getAssets(),"fonts/Billabong.ttf");
         stockTitle.setTypeface(myCustomFont);
 
-
-      /*  getJSONObject getjsonObject=new getJSONObject();
-        textView=(TextView)findViewById(R.id.textStock);*/
-
-        /*try {
-            JSONObject jsonObject=getjsonObject.getJSONObjectFromURL(urlString);
-            JSONArray jsonArray=jsonObject.getJSONArray("");
-            for(int i=0; i<jsonArray.length(); i++)
-            {
-                check+="\n"+jsonArray.getJSONObject(i).getString("id").toString();
-            }
-            textView.setText(check);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
     }
 
     @Override
@@ -130,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new HomeFragment(), "ONE");
         adapter.addFragment(new SearchFragment(), "TWO");
         adapter.addFragment(new UserProfileFragment(), "THREE");
+        viewPager.setOffscreenPageLimit(3);
+        adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
     }
 

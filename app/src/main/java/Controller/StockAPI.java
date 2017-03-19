@@ -37,13 +37,16 @@ public class StockAPI {
                 for (Stock s : stockList) {
                     stockObj.put("Symbol", s.getSymbol());
                     stockObj.put("Price", s.getQuote().getPrice());
+                    stockObj.put("Volume", s.getQuote().getVolume());
                     stockObj.put("OpenPrice", s.getQuote().getOpen());
                     stockObj.put("PrevClose", s.getQuote().getPreviousClose());
-                    stockObj.put("HighPrice", s.getQuote().getDayHigh());
-                    stockObj.put("LowPrice", s.getQuote().getDayLow());
-                    stockObj.put("Volume", s.getQuote().getVolume());
+                    stockObj.put("DayHigh", s.getQuote().getDayHigh());
+                    stockObj.put("DayLow", s.getQuote().getDayLow());
+                    stockObj.put("YearHigh", s.getQuote().getYearHigh());
+                    stockObj.put("YearLow", s.getQuote().getYearLow());
                     stockObj.put("Change", s.getQuote().getChangeInPercent());
-
+                    stockObj.put("Name", s.getName());
+                    stockObj.put("Currency", s.getCurrency());
                 }
 
             } catch (JSONException e) {

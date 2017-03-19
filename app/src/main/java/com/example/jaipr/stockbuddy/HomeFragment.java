@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +22,13 @@ import org.json.JSONObject;
 import Adapter.StockAdapter;
 import Controller.StockAPI;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    ListView list;
+    private ListView list;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private JSONObject jsonObject;
+    private StockAdapter stockAdapter;
+    private StockAPI stockAPI;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -38,19 +43,32 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_home, container, false);
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
 
-        StockAPI stockAPI=new StockAPI();
+        stockAPI = new StockAPI();
 
         String[] symbols = new String[]{"INTC", "FB", "TSLA", "NKE", "YHOO", "AMZN", "TCS", "MSFT"};
-        if(isNetworkAvailable())
-        {
+        if (isNetworkAvailable()) {
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences("StockSymbol", Context.MODE_PRIVATE);
             boolean[] _result = getSymbolStatus(symbols);
-            final JSONObject jsonObject = stockAPI.getStock(symbols, _result);
-            list= (ListView) view.findViewById(R.id.list);
-            StockAdapter stockAdapter = new StockAdapter(getActivity(), jsonObject);
+            //jsonObject = stockAPI.getStock(symbols, _result);
+            SharedPreferences sharedPreferences1 = getActivity().getApplicationContext().getSharedPreferences("StockSymbol", Context.MODE_PRIVATE);
+            try {
+                jsonObject = new JSONObject(sharedPreferences1.getString("StockJSON", null).toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            list = (ListView) view.findViewById(R.id.list);
+            stockAdapter = new StockAdapter(getActivity(), jsonObject);
             list.setAdapter(stockAdapter);
+
+            swipeRefreshLayout.setOnRefreshListener(this);
+
+            /**
+             * Showing Swipe Refresh animation on activity create
+             * As animation won't start on onCreate, post runnable is used
+             */
 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -66,10 +84,19 @@ public class HomeFragment extends Fragment {
                     }
                 }
             });
-        }
-        else {
+        } else {
 
         }
+
+        swipeRefreshLayout.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        swipeRefreshLayout.setRefreshing(true);
+                                        fetchStock();
+                                        swipeRefreshLayout.setRefreshing(false);
+                                    }
+                                }
+        );
         return view;
     }
 
@@ -87,5 +114,23 @@ public class HomeFragment extends Fragment {
             _symbol[i] = sharedPreferences.getBoolean(symbols[i], false);
         }
         return _symbol;
+    }
+
+    @Override
+    public void onRefresh() {
+        fetchStock();
+    }
+
+    public void fetchStock() {
+        swipeRefreshLayout.setRefreshing(true);
+        String[] symbols = new String[]{"INTC", "FB", "TSLA", "NKE", "YHOO", "AMZN", "TCS", "MSFT"};
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("StockSymbol", Context.MODE_PRIVATE);
+        boolean[] _result = getSymbolStatus(symbols);
+        if (isNetworkAvailable()) {
+            jsonObject = stockAPI.getStock(symbols, _result);
+            stockAdapter = new StockAdapter(getActivity(), jsonObject);
+            list.setAdapter(stockAdapter);
+        }
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

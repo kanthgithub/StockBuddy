@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,9 +24,9 @@ import Bean.User;
 
 public class LoginActivity extends AppCompatActivity {
 
+    Handler mHandler = new Handler();
     private EditText editTextEmail;
     private EditText editTextPassword;
-
     private User user;
 
     @Override

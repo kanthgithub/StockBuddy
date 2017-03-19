@@ -6,4 +6,6 @@
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#6BD7A9</color>
+    <color name="colorRed">@android:color/holo_red_light</color>
+    <color name="colorGreen">@android:color/holo_green_light</color>
 </resources>
