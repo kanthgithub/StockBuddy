@@ -129,6 +129,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         if (isNetworkAvailable()) {
             jsonObject = stockAPI.getStock(symbols, _result);
             stockAdapter = new StockAdapter(getActivity(), jsonObject);
+
+            String jsonString = jsonObject.toString();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString("StockJSON", jsonString);
+            editor.commit();
+
             list.setAdapter(stockAdapter);
         }
         swipeRefreshLayout.setRefreshing(false);

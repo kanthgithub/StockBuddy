@@ -6,17 +6,13 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import Bean.User;
 
 /**
  * Created by jaipr on 25-02-2017.
@@ -27,7 +23,8 @@ public class LoginActivity extends AppCompatActivity {
     Handler mHandler = new Handler();
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private User user;
+    private TextInputLayout textInputLayoutEmail;
+    private TextInputLayout textInputLayoutPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,21 +54,45 @@ public class LoginActivity extends AppCompatActivity {
         String str_email= editTextEmail.getText().toString();
         String str_password= editTextPassword.getText().toString();
 
-        user=new User();
+        boolean isValid = true;
 
-        if(validateLogin(str_email,str_password))
+        if (Require(str_email))
         {
-            setSharedPreferences();
-            Intent i = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(i);
+            textInputLayoutEmail = (TextInputLayout) findViewById(R.id.input_layout_email);
+            textInputLayoutEmail.setError(null);
         }
         else {
-            editTextEmail.setBackground(getDrawable(R.drawable.edittextshapeerror));
-            editTextPassword.setBackground(getDrawable(R.drawable.edittextshapeerror));
-            //Toast.makeText(getApplicationContext(),"Wrong credential",Toast.LENGTH_SHORT).show();
-
-            showToast("Wrong credential");
+            textInputLayoutEmail = (TextInputLayout) findViewById(R.id.input_layout_email);
+            textInputLayoutEmail.setError("Enter email id");
+            isValid = false;
         }
+
+        if (Require(str_password)) {
+            textInputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
+            textInputLayoutPassword.setError(null);
+        } else {
+            textInputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
+            textInputLayoutPassword.setError("Enter password");
+            isValid = false;
+        }
+
+        if (isValid) {
+            if (validateLogin(str_email, str_password)) {
+                setSharedPreferences();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            } else {
+                textInputLayoutEmail = (TextInputLayout) findViewById(R.id.input_layout_email);
+                textInputLayoutEmail.setError("Enter valid email id");
+                textInputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
+                textInputLayoutPassword.setError("Enter valid password");
+                Toast.makeText(getApplicationContext(), "Wrong credential", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public boolean Require(String text) {
+        return !(text == null || text.equals(""));
     }
 
     public boolean validateLogin(String email,String password)
@@ -112,22 +133,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed()
     {
         moveTaskToBack(true);
-    }
-
-    public void showToast(String str)
-    {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.layout_custom_toast,
-                (ViewGroup) findViewById(R.id.toast_layout_root));
-
-        TextView text = (TextView) layout.findViewById(R.id.text);
-        text.setText(str);
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 200);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(layout);
-        toast.show();
     }
 
     public void setStock() {

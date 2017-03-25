@@ -73,11 +73,9 @@ public class FlashActivity extends Activity implements Animation.AnimationListen
         // set animation listener
         animZoomOut.setAnimationListener(this);
         animMove.setAnimationListener(this);
-
-        new Thread(new Runnable() {
+       /* new Thread(new Runnable() {
             @Override
             public void run() {
-                // TODO Auto-generated method stub
                 while (true) {
                     try {
                         Thread.sleep(5000);
@@ -91,11 +89,10 @@ public class FlashActivity extends Activity implements Animation.AnimationListen
                             }
                         });
                     } catch (Exception e) {
-                        // TODO: handle exception
                     }
                 }
             }
-        }).start();
+        }).start();*/
     }
 
     public void startAnim()
@@ -126,13 +123,11 @@ public class FlashActivity extends Activity implements Animation.AnimationListen
 
     @Override
     public void onAnimationRepeat(Animation animation) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onAnimationStart(Animation animation) {
-        // TODO Auto-generated method stub
 
     }
 
@@ -142,6 +137,7 @@ public class FlashActivity extends Activity implements Animation.AnimationListen
         try {
             if(sharedPreferences.getBoolean("isLogin",false))
             {
+                setStock();
                 Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
             }

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jaipr.stockbuddy.R;
 
@@ -79,8 +78,6 @@ public class SymbolAdapter extends ArrayAdapter<String> {
                     editor.commit();
                     holder.btnAddRemove.setText("Remove");
                 }
-
-                Toast.makeText(getContext(), symbol[position], Toast.LENGTH_SHORT).show();
             }
         });
         return convertView;

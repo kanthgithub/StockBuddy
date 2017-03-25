@@ -39,7 +39,6 @@ public class StockAdapter extends ArrayAdapter<String> {
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return jsonArray.length();
     }
 

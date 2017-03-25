@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -35,6 +32,12 @@ public class SignupActivity extends AppCompatActivity {
     private String stringPassword;
     private String stringConfirmPassword;
 
+    private TextInputLayout textInputLayoutFirstName;
+    private TextInputLayout textInputLayoutLastName;
+    private TextInputLayout textInputLayoutEmail;
+    private TextInputLayout textInputLayoutPassword;
+    private TextInputLayout textInputLayoutConPassword;
+
     public static boolean validateEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
@@ -48,136 +51,112 @@ public class SignupActivity extends AppCompatActivity {
         /*stop automatically appear android keyboard when activity start*/
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        TextView stockTitle=(TextView) findViewById(R.id.title);
-        Typeface myCustomFont=Typeface.createFromAsset(getAssets(),"fonts/Ubuntu-L.ttf");
+        TextView stockTitle = (TextView) findViewById(R.id.title);
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/Ubuntu-L.ttf");
         stockTitle.setTypeface(myCustomFont);
 
     }
 
     /*redirect to second signup layout*/
-    public void SignupNext (View view)
-    {
-        editTextFirstName=(EditText) findViewById(R.id.input_firstName);
-        editTextLastName=(EditText) findViewById(R.id.input_lastName);
+    public void SignupNext(View view) {
+        editTextFirstName = (EditText) findViewById(R.id.input_firstName);
+        editTextLastName = (EditText) findViewById(R.id.input_lastName);
 
-        stringFirstName=editTextFirstName.getText().toString();
-        stringLastName=editTextLastName.getText().toString();
+        stringFirstName = editTextFirstName.getText().toString();
+        stringLastName = editTextLastName.getText().toString();
 
-        editTextFirstName.setBackground(getDrawable(R.drawable.edittextshape));
-        editTextLastName.setBackground(getDrawable(R.drawable.edittextshape));
+        textInputLayoutFirstName = (TextInputLayout) findViewById(R.id.input_layout_first_name);
+        textInputLayoutLastName = (TextInputLayout) findViewById(R.id.input_layout_last_name);
 
-        if(isRequire(stringFirstName))
-        {
-            editTextFirstName.setBackground(getDrawable(R.drawable.edittextshapeerror));
+        textInputLayoutFirstName.setError(null);
+        textInputLayoutLastName.setError(null);
+
+        if (isRequire(stringFirstName)) {
+            textInputLayoutFirstName.setError("Enter first name");
         }
-        if(isRequire(stringLastName))
-        {
-            editTextLastName.setBackground(getDrawable(R.drawable.edittextshapeerror));
-        }
-        else {
+        if (isRequire(stringLastName)) {
+            textInputLayoutLastName.setError("Enter last name");
+        } else {
             setContentView(R.layout.fragment_signup2);
 
-            TextView stockTitle=(TextView) findViewById(R.id.title);
-            Typeface myCustomFont=Typeface.createFromAsset(getAssets(),"fonts/Ubuntu-L.ttf");
+            TextView stockTitle = (TextView) findViewById(R.id.title);
+            Typeface myCustomFont = Typeface.createFromAsset(getAssets(), "fonts/Ubuntu-L.ttf");
             stockTitle.setTypeface(myCustomFont);
         }
     }
 
     /*perform the register operation*/
-    public void SignUp(View view)
-    {
-        editTextEmail=(EditText) findViewById(R.id.input_email);
-        editTextPassword=(EditText) findViewById(R.id.input_password);
-        editTextConfirmPassword=(EditText) findViewById(R.id.input_confirm_password);
+    public void SignUp(View view) {
+        editTextEmail = (EditText) findViewById(R.id.input_email);
+        editTextPassword = (EditText) findViewById(R.id.input_password);
+        editTextConfirmPassword = (EditText) findViewById(R.id.input_confirm_password);
 
-        stringEmail=editTextEmail.getText().toString();
-        stringPassword=editTextPassword.getText().toString();
-        stringConfirmPassword=editTextConfirmPassword.getText().toString();
+        stringEmail = editTextEmail.getText().toString();
+        stringPassword = editTextPassword.getText().toString();
+        stringConfirmPassword = editTextConfirmPassword.getText().toString();
 
-        editTextEmail.setBackground(getDrawable(R.drawable.edittextshape));
-        editTextPassword.setBackground(getDrawable(R.drawable.edittextshape));
-        editTextConfirmPassword.setBackground(getDrawable(R.drawable.edittextshape));
+        textInputLayoutEmail = (TextInputLayout) findViewById(R.id.input_layout_email);
+        textInputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
+        textInputLayoutConPassword = (TextInputLayout) findViewById(R.id.input_layout_confirm_password);
 
-        boolean isValid=true;
+        textInputLayoutEmail.setError(null);
+        textInputLayoutPassword.setError(null);
+        textInputLayoutConPassword.setError(null);
 
-        if(!validateEmail(stringEmail))
-        {
-            editTextEmail.setBackground(getDrawable(R.drawable.edittextshapeerror));
-            showToast("Enter valid Email");
-            isValid=false;
+        boolean isValid = true;
+
+        if (!validateEmail(stringEmail)) {
+            textInputLayoutEmail.setError("Enter valid email");
+            isValid = false;
         }
 
-        if(isRequire(stringPassword))
-        {
-            editTextPassword.setBackground(getDrawable(R.drawable.edittextshapeerror));
-            isValid=false;
+        if (isRequire(stringPassword)) {
+            textInputLayoutPassword.setError("Enter password");
+            isValid = false;
         }
 
-        if(isRequire(stringConfirmPassword))
-        {
-            editTextConfirmPassword.setBackground(getDrawable(R.drawable.edittextshapeerror));
-            isValid=false;
+        if (isRequire(stringConfirmPassword)) {
+            textInputLayoutConPassword.setError("Enter password");
+            isValid = false;
         }
 
-        if(!stringConfirmPassword.trim().equals(stringPassword.trim()))
-        {
-            editTextConfirmPassword.setBackground(getDrawable(R.drawable.edittextshapeerror));
-            showToast("Password must be same");
-            isValid=false;
+        if (!stringConfirmPassword.trim().equals(stringPassword.trim())) {
+            textInputLayoutConPassword.setError("Password must be same");
+            isValid = false;
         }
-        if(isValid) {
+
+        if (isValid) {
             setSharedPreferences();
-            Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
         }
 
     }
 
     /*redirect back to login actvity*/
-    public void backToLogin(View view)
-    {
-        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+    public void backToLogin(View view) {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
     }
 
-    public void setSharedPreferences()
-    {
-       try {
-           SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
-           SharedPreferences.Editor editor=sharedPreferences.edit();
+    public void setSharedPreferences() {
+        try {
+            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
 
-           editor.putString("FirstName", StringUtils.capitalize(stringFirstName).trim());
-           editor.putString("LastName", StringUtils.capitalize(stringLastName).trim());
-           editor.putString("Email", stringEmail.toLowerCase().trim());
-           editor.putString("Password", stringPassword.trim());
+            editor.putString("FirstName", StringUtils.capitalize(stringFirstName).trim());
+            editor.putString("LastName", StringUtils.capitalize(stringLastName).trim());
+            editor.putString("Email", stringEmail.toLowerCase().trim());
+            editor.putString("Password", stringPassword.trim());
 
-           editor.commit();
-       }
-       catch (Exception e)
-       {
+            editor.commit();
+        } catch (Exception e) {
 
-       }
+        }
     }
 
-    public boolean isRequire(String s)
-    {
+    public boolean isRequire(String s) {
         return s.equals("") || s == null;
-    }
-
-    public void showToast(String str)
-    {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.layout_custom_toast,
-                (ViewGroup) findViewById(R.id.toast_layout_root));
-
-        TextView text = (TextView) layout.findViewById(R.id.text);
-        text.setText(str);
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 200);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(layout);
-        toast.show();
     }
 
 }
