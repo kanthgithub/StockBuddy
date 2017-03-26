@@ -54,7 +54,6 @@ public class StockActivity extends AppCompatActivity {
         textViewChange = (TextView) findViewById(R.id.change);
 
         if (isNetworkAvailable()) {
-
             SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("StockSymbol", Context.MODE_PRIVATE);
 
             JSONObject jsonObject = null;
@@ -116,16 +115,20 @@ public class StockActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the main_menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.sub_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        Intent intent = null;
         switch (item.getItemId()) {
+            case R.id.graph:
+                intent = new Intent(this, GraphActivity.class);
+                this.startActivity(intent);
+                break;
             case R.id.aboutUs:
-                Intent intent = new Intent(this, AboutUsActivity.class);
+                intent = new Intent(this, AboutUsActivity.class);
                 this.startActivity(intent);
                 break;
             case R.id.logout:

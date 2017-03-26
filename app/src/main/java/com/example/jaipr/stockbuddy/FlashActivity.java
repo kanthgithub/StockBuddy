@@ -137,9 +137,14 @@ public class FlashActivity extends Activity implements Animation.AnimationListen
         try {
             if(sharedPreferences.getBoolean("isLogin",false))
             {
-                setStock();
-                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
+                if (isNetworkAvailable()) {
+                    setStock();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    this.finish();
+                    System.exit(0);
+                }
             }
             else {
                 Intent intent=new Intent(getApplicationContext(),LoginActivity.class);

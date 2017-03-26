@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:stockbuddy="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/graph"
+        android:icon="@mipmap/stats"
+        android:title="Graph"
+        stockbuddy:showAsAction="always" />
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"></item>
+    <item
+        android:id="@+id/aboutUs"
+        android:title="About Us"></item>
+</menu>

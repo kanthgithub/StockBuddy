@@ -35,4 +35,6 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.5'
     compile 'com.yahoofinance-api:YahooFinanceAPI:3.6.0'
     compile 'com.jjoe64:graphview:4.2.1'
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
+    compile 'org.quanqi:mpandroidchart:1.7.5'
 }

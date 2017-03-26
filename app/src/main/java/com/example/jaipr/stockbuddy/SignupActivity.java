@@ -2,8 +2,9 @@ package com.example.jaipr.stockbuddy;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +12,19 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,6 +48,8 @@ public class SignupActivity extends AppCompatActivity {
     private TextInputLayout textInputLayoutEmail;
     private TextInputLayout textInputLayoutPassword;
     private TextInputLayout textInputLayoutConPassword;
+
+    private JSONObject jsonObject;
 
     public static boolean validateEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
@@ -126,9 +139,23 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         if (isValid) {
-            setSharedPreferences();
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
+            if (isNetworkAvailable()) {
+                String JSONStr = PostData();
+                try {
+                    jsonObject = new JSONObject(JSONStr);
+                    String status = jsonObject.get("success").toString();
+                    if (status.equals("1")) {
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(this, "User already exist", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Toast.makeText(this, "Connection not available", Toast.LENGTH_LONG).show();
+            }
         }
 
     }
@@ -139,24 +166,52 @@ public class SignupActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void setSharedPreferences() {
+    public boolean isRequire(String s) {
+        return s.equals("") || s == null;
+    }
+
+    public String PostData() {
+        String jsonResponse = "";
+        String URL = "https://androidpugnatorcom.000webhostapp.com/Register.php?Email=" + stringEmail + "&Password=" + stringPassword
+                + "&FirstName=" + stringFirstName + "&LastName=" + stringLastName + "&Mobile=1234567890&IMEI=1234567890";
         try {
-            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(URL);
 
-            editor.putString("FirstName", StringUtils.capitalize(stringFirstName).trim());
-            editor.putString("LastName", StringUtils.capitalize(stringLastName).trim());
-            editor.putString("Email", stringEmail.toLowerCase().trim());
-            editor.putString("Password", stringPassword.trim());
+            HttpResponse httpResponse = httpClient.execute(httpPost);
 
-            editor.commit();
+            HttpEntity httpEntity = httpResponse.getEntity();
+            jsonResponse = readResponse(httpResponse);
+        } catch (Exception exception) {
+        }
+        return jsonResponse;
+    }
+
+    public String readResponse(HttpResponse res) {
+        InputStream is = null;
+        String return_text = "";
+        try {
+            is = res.getEntity().getContent();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
+            String line = "";
+            StringBuffer sb = new StringBuffer();
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+            return_text = sb.toString();
         } catch (Exception e) {
 
         }
+        return return_text;
+
     }
 
-    public boolean isRequire(String s) {
-        return s.equals("") || s == null;
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }

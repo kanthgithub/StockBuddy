@@ -39,7 +39,7 @@
         <activity
             android:name=".AboutUsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme"></activity>
+            android:theme="@style/LoginTheme" />
         <activity
             android:name=".StockActivity"
             android:theme="@style/StockTheme">
@@ -47,6 +47,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.jaipr.stockbuddy.MainActivity" />
         </activity>
+        <activity
+            android:name=".GraphActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StockTheme"></activity>
     </application>
 
 </manifest>
