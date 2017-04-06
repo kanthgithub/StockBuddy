@@ -17,7 +17,8 @@
             android:theme="@style/LoginTheme" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/StockTheme" />
         <activity
             android:name=".SignupActivity"
             android:screenOrientation="portrait"
@@ -42,6 +43,7 @@
             android:theme="@style/LoginTheme" />
         <activity
             android:name=".StockActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/StockTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

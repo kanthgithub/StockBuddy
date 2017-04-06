@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
@@ -23,6 +24,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -47,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private JSONObject jsonObject;
 
+    private boolean isRegisterUser = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,12 +69,18 @@ public class LoginActivity extends AppCompatActivity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
     }
 
+//    public  void Login(View view)
+//    {
+//        new AsynkLogin().execute();
+//    }
+
     public void Login(View view)
     {
+        progressBar.setVisibility(View.VISIBLE);
         if (isNetworkAvailable()) {
             editTextEmail = (EditText) findViewById(R.id.login_email);
             editTextPassword = (EditText) findViewById(R.id.login_password);
@@ -99,24 +109,26 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             if (isValid) {
-                if (validateLogin()) {
-                    progressBar.setProgress(100);
-                    progressBar.setVisibility(View.INVISIBLE);
-                    setSharedPreferences();
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(i);
-                } else {
-                    progressBar.setProgress(100);
-                    progressBar.setVisibility(View.INVISIBLE);
-                    textInputLayoutEmail = (TextInputLayout) findViewById(R.id.input_layout_email);
-                    textInputLayoutEmail.setError("Enter valid email id");
-                    textInputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
-                    textInputLayoutPassword.setError("Enter valid password");
-                    Toast.makeText(getApplicationContext(), "Wrong credential", Toast.LENGTH_SHORT).show();
-                }
+                new AsynkLogin().execute();
             }
         } else {
+            progressBar.setVisibility(View.GONE);
             Toast.makeText(this, "Connection not available", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void doLogin() {
+        if (isRegisterUser) {
+            setSharedPreferences();
+            setStock();
+            Intent i = new Intent(getApplicationContext(), FlashActivity.class);
+            startActivity(i);
+        } else {
+            textInputLayoutEmail = (TextInputLayout) findViewById(R.id.input_layout_email);
+            textInputLayoutEmail.setError("Enter valid email id");
+            textInputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
+            textInputLayoutPassword.setError("Enter valid password");
+            Toast.makeText(getApplicationContext(), "Wrong credential", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -124,22 +136,6 @@ public class LoginActivity extends AppCompatActivity {
         return !(text == null || text.equals(""));
     }
 
-    public boolean validateLogin()
-    {
-        try {
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.setProgress(20);
-            String JSONStr = PostData();
-            progressBar.setProgress(60);
-            jsonObject = new JSONObject(JSONStr);
-            String status = jsonObject.get("success").toString();
-            return status.equals("1");
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
 
     public void Register(View view)
     {
@@ -150,7 +146,6 @@ public class LoginActivity extends AppCompatActivity {
     public void setSharedPreferences()
     {
         try {
-            progressBar.setProgress(80);
             SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences("LoginData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor=sharedPreferences.edit();
 
@@ -184,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("StockSymbol", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            String[] symbols = new String[]{"INTC", "FB", "TSLA", "NKE", "YHOO", "AMZN", "TCS", "MSFT"};
+            String[] symbols = new String[]{"AAPL", "GOOGL", "INTC", "FB", "TSLA", "NFLX", "YHOO", "AMZN", "MSFT"};
 
             for (String symbol : symbols) {
                 editor.putBoolean(symbol, true);
@@ -238,4 +233,34 @@ public class LoginActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    class AsynkLogin extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            try {
+                String JSONStr = PostData();
+                jsonObject = new JSONObject(JSONStr);
+                String status = jsonObject.get("success").toString();
+                isRegisterUser = status.equals("1");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressBar.setVisibility(View.GONE);
+            doLogin();
+        }
+    }
 }

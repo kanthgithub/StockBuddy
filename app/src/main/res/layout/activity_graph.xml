@@ -48,13 +48,15 @@
                     android:padding="5dp">
 
                     <LinearLayout
+                        android:id="@+id/barDay1"
                         android:layout_width="match_parent"
-                        android:layout_height="110dp"
+                        android:layout_height="10dp"
                         android:layout_above="@+id/day1"
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        android:background="#ffeb3b"></LinearLayout>
+                        android:background="@color/colorPrimary"
+                        android:orientation="vertical"></LinearLayout>
 
                     <TextView
                         android:id="@+id/day1"
@@ -72,13 +74,15 @@
                     android:padding="5dp">
 
                     <LinearLayout
+                        android:id="@+id/barDay2"
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
+                        android:layout_height="10dp"
                         android:layout_above="@+id/day2"
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        android:background="#f44336"></LinearLayout>
+                        android:background="@color/colorPrimary"
+                        android:orientation="vertical"></LinearLayout>
 
                     <TextView
                         android:id="@+id/day2"
@@ -96,13 +100,15 @@
                     android:padding="5dp">
 
                     <LinearLayout
+                        android:id="@+id/barDay3"
                         android:layout_width="match_parent"
-                        android:layout_height="165dp"
+                        android:layout_height="10dp"
                         android:layout_above="@+id/day3"
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        android:background="#4caf50"></LinearLayout>
+                        android:background="@color/colorPrimary"
+                        android:orientation="vertical"></LinearLayout>
 
                     <TextView
                         android:id="@+id/day3"
@@ -120,13 +126,15 @@
                     android:padding="5dp">
 
                     <LinearLayout
+                        android:id="@+id/barDay4"
                         android:layout_width="match_parent"
-                        android:layout_height="110dp"
+                        android:layout_height="10dp"
                         android:layout_above="@+id/day4"
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        android:background="#ffeb3b"></LinearLayout>
+                        android:background="@color/colorPrimary"
+                        android:orientation="vertical"></LinearLayout>
 
                     <TextView
                         android:id="@+id/day4"
@@ -144,13 +152,15 @@
                     android:padding="5dp">
 
                     <LinearLayout
+                        android:id="@+id/barDay5"
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
+                        android:layout_height="10dp"
                         android:layout_above="@+id/day5"
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        android:background="#f44336"></LinearLayout>
+                        android:background="@color/colorPrimary"
+                        android:orientation="vertical"></LinearLayout>
 
                     <TextView
                         android:id="@+id/day5"
@@ -179,6 +189,7 @@
                 android:paddingTop="10dp">
 
                 <TextView
+                    android:id="@+id/txtSymbol"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Symbol"
@@ -186,6 +197,7 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/txtPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="$ 43.54" />
@@ -213,9 +225,10 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/txtPridictPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="$ 43.54" />
+                    android:text="$ 142.29" />
             </LinearLayout>
 
             <View
@@ -264,7 +277,7 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_centerVertical="true"
-                        android:background="#ffeb3b"
+                        android:background="@color/colorPrimary"
                         android:orientation="vertical" />
 
                     <TextView
@@ -286,7 +299,7 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_centerVertical="true"
-                        android:background="#4caf50"
+                        android:background="@color/colorAccent"
                         android:orientation="vertical" />
 
                     <TextView

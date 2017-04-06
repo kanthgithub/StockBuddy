@@ -35,8 +35,8 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
 
-        final String[] symbols = new String[]{"INTC", "FB", "TSLA", "NKE", "YHOO", "AMZN", "TCS", "MSFT"};
-        String[] symbolsName = new String[]{"Intel Corporation", "Facebook, Inc.", "Tesla, Inc.", "NIKE, Inc.", "Yahoo! Inc.", "Amazon.com, Inc.", "The Container Store Group, Inc.", "Microsoft Corporation"};
+        final String[] symbols = new String[]{"AAPL", "GOOGL", "INTC", "FB", "TSLA", "NFLX", "YHOO", "AMZN", "MSFT"};
+        String[] symbolsName = new String[]{"Apple Inc.", "Alphabet Inc", "Intel Corporation", "Facebook, Inc.", "Tesla, Inc.", "Netflix, Inc.", "Yahoo! Inc.", "Amazon.com, Inc.", "Microsoft Corporation"};
         boolean[] isSymbolAdd = getSymbolStatus(symbols);
         listView = (ListView) view.findViewById(R.id.symbol_list);
         SymbolAdapter symbolAdapter = new SymbolAdapter(getActivity(), symbols, symbolsName, isSymbolAdd, getActivity());

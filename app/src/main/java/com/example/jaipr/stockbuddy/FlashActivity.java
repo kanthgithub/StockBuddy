@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -14,9 +15,20 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import Controller.StockAPI;
 
@@ -27,14 +39,16 @@ import Controller.StockAPI;
 public class FlashActivity extends Activity implements Animation.AnimationListener {
 
     private static int TIME_OUT=500;
-    // Animation
+    StockAPI stockAPI;
+
     Animation animZoomOut;
     Animation animMove;
-    Handler mHandler = new Handler();
-    StockAPI stockAPI;
+
     private TextView txtMessage;
     private ImageView imageView;
     private JSONObject jsonObject;
+    private ProgressBar progressBar;
+    private String strPrediction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +63,8 @@ public class FlashActivity extends Activity implements Animation.AnimationListen
         TextView stockTitle=(TextView)findViewById(R.id.text_App_Title);
         Typeface myCustomFont=Typeface.createFromAsset(getAssets(),"fonts/Ubuntu-L.ttf");
         stockTitle.setTypeface(myCustomFont);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -73,26 +89,7 @@ public class FlashActivity extends Activity implements Animation.AnimationListen
         // set animation listener
         animZoomOut.setAnimationListener(this);
         animMove.setAnimationListener(this);
-       /* new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Thread.sleep(5000);
-                        mHandler.post(new Runnable() {
 
-                            @Override
-                            public void run() {
-                                if (isNetworkAvailable()) {
-                                    setStock();
-                                }
-                            }
-                        });
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        }).start();*/
     }
 
     public void startAnim()
@@ -113,8 +110,9 @@ public class FlashActivity extends Activity implements Animation.AnimationListen
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    startApp();
-                    finish();
+                    SetPrediction();
+                    new GetPredictionAsynk().execute();
+                    //finish();
                 }
             }, TIME_OUT);
         }
@@ -142,6 +140,7 @@ public class FlashActivity extends Activity implements Animation.AnimationListen
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 } else {
+                    Toast.makeText(this, "Connection not available", Toast.LENGTH_LONG).show();
                     this.finish();
                     System.exit(0);
                 }
@@ -174,7 +173,7 @@ public class FlashActivity extends Activity implements Animation.AnimationListen
     }
 
     public void setStock() {
-        String[] symbols = new String[]{"INTC", "FB", "TSLA", "NKE", "YHOO", "AMZN", "TCS", "MSFT"};
+        String[] symbols = new String[]{"AAPL", "GOOGL", "INTC", "FB", "TSLA", "NFLX", "YHOO", "AMZN", "MSFT"};
         stockAPI = new StockAPI();
 
         boolean[] _result = getSymbolStatus(symbols);
@@ -188,4 +187,91 @@ public class FlashActivity extends Activity implements Animation.AnimationListen
         editor.putString("StockJSON", jsonString);
         editor.commit();
     }
+
+    public String PostData() {
+        String jsonResponse = "";
+        String URL = "https://stockbull.herokuapp.com/stock/api";
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpPost = new HttpGet(URL);
+
+            HttpResponse httpResponse = httpClient.execute(httpPost);
+
+            HttpEntity httpEntity = httpResponse.getEntity();
+            jsonResponse = readResponse(httpResponse);
+        } catch (Exception exception) {
+        }
+        return jsonResponse;
+    }
+
+    public String readResponse(HttpResponse res) {
+        InputStream is = null;
+        String return_text = "";
+        try {
+            is = res.getEntity().getContent();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
+            String line = "";
+            StringBuffer sb = new StringBuffer();
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+            return_text = sb.toString();
+        } catch (Exception e) {
+
+        }
+        return return_text;
+
+    }
+
+    public void SetPrediction() {
+        strPrediction = PostData();
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("StockPrediction", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("Prediction", strPrediction);
+        editor.commit();
+
+    }
+
+    class StartApp extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            startApp();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    class GetPredictionAsynk extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            SetPrediction();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            new StartApp().execute();
+        }
+    }
+
 }

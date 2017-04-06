@@ -30,6 +30,9 @@ public class StockActivity extends AppCompatActivity {
     private TextView textViewPrice;
     private TextView textViewChange;
 
+    private String symbol;
+    private String price;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,7 +43,7 @@ public class StockActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stock);
 
         Bundle bundle = getIntent().getExtras();
-        String symbol = bundle.getString("Symbol");
+        symbol = bundle.getString("Symbol");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -83,7 +86,8 @@ public class StockActivity extends AppCompatActivity {
             try {
                 textViewSymbolName.setText(jsonObject.get("Symbol").toString());
                 textViewCompanyName.setText(jsonObject.get("Name").toString());
-                textViewPrice.setText("$ " + jsonObject.get("Price").toString());
+                price = jsonObject.get("Price").toString();
+                textViewPrice.setText("$ " + price);
                 String change = jsonObject.get("Change").toString();
 
                 _value[0] = jsonObject.get("Volume").toString();
@@ -125,6 +129,8 @@ public class StockActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.graph:
                 intent = new Intent(this, GraphActivity.class);
+                intent.putExtra("Symbol", symbol);
+                intent.putExtra("Price", price);
                 this.startActivity(intent);
                 break;
             case R.id.aboutUs:

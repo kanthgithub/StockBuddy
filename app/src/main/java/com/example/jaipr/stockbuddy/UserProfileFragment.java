@@ -26,6 +26,7 @@ public class UserProfileFragment extends Fragment {
     private TextView userGender;
     private TextView userLocation;
 
+
     private User user;
 
     public UserProfileFragment() {

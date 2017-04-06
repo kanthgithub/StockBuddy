@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         stockAPI = new StockAPI();
 
-        String[] symbols = new String[]{"INTC", "FB", "TSLA", "NKE", "YHOO", "AMZN", "TCS", "MSFT"};
+        String[] symbols = new String[]{"AAPL", "GOOGL", "INTC", "FB", "TSLA", "NFLX", "YHOO", "AMZN", "MSFT"};
         if (isNetworkAvailable()) {
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences("StockSymbol", Context.MODE_PRIVATE);
             boolean[] _result = getSymbolStatus(symbols);
@@ -123,7 +123,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public void fetchStock() {
         swipeRefreshLayout.setRefreshing(true);
-        String[] symbols = new String[]{"INTC", "FB", "TSLA", "NKE", "YHOO", "AMZN", "TCS", "MSFT"};
+        String[] symbols = new String[]{"AAPL", "GOOGL", "INTC", "FB", "TSLA", "NFLX", "YHOO", "AMZN", "MSFT"};
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("StockSymbol", Context.MODE_PRIVATE);
         boolean[] _result = getSymbolStatus(symbols);
         if (isNetworkAvailable()) {
