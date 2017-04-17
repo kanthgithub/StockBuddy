@@ -39,7 +39,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:text="Jaimin Prajapati"
+                        android:text="Stock Buddy"
                         android:textColor="#ffffff"
                         android:textSize="16sp" />
                 </RelativeLayout>
@@ -54,7 +54,7 @@
                         android:layout_height="@dimen/rounded_image_width_height"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/jaimin" />
+                        android:src="@drawable/ic_launcher" />
                 </RelativeLayout>
 
                 <LinearLayout

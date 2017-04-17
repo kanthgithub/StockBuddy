@@ -10,8 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -119,7 +121,7 @@ public class StockActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the main_menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.sub_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -169,5 +171,52 @@ public class StockActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    public void Prediction(View view)
+    {
+        JSONObject jsonObject;
+        JSONArray jsonArray=null;
+        JSONObject predictjsonObject=null;
+        String isPredicted="no";
+
+        Intent intent = new Intent(this, GraphActivity.class);
+        intent.putExtra("Symbol", symbol);
+        intent.putExtra("Price", price);
+
+        SharedPreferences sharedPrefereunces1 = this.getApplicationContext().getSharedPreferences("StockPrediction", Context.MODE_PRIVATE);
+        try {
+            jsonObject = new JSONObject(sharedPrefereunces1.getString("Prediction", null).toString());
+            jsonArray = jsonObject.getJSONArray("data");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject _temp = null;
+            try {
+                _temp = jsonArray.getJSONObject(i);
+                if (_temp.get("Symbol").toString().equals(symbol)) {
+                    predictjsonObject = _temp;
+                    break;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            isPredicted =predictjsonObject.get("Predicted").toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(isPredicted.equals("yes"))
+        {
+            this.startActivity(intent);
+        }
+        else {
+            Toast.makeText(this, "No prediction available", Toast.LENGTH_LONG).show();
+        }
+
+    }
 
 }

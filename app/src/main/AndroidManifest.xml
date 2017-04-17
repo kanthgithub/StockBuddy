@@ -52,7 +52,8 @@
         <activity
             android:name=".GraphActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/StockTheme"></activity>
+            android:theme="@style/StockTheme" />
+        <activity android:name=".TermsAndConditionActivity"></activity>
     </application>
 
 </manifest>

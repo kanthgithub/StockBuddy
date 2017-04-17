@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void Login(View view)
     {
-        progressBar.setVisibility(View.VISIBLE);
         if (isNetworkAvailable()) {
             editTextEmail = (EditText) findViewById(R.id.login_email);
             editTextPassword = (EditText) findViewById(R.id.login_password);
@@ -112,7 +111,6 @@ public class LoginActivity extends AppCompatActivity {
                 new AsynkLogin().execute();
             }
         } else {
-            progressBar.setVisibility(View.GONE);
             Toast.makeText(this, "Connection not available", Toast.LENGTH_LONG).show();
         }
     }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import Bean.User;
+import Controller.RoundedImageView;
 
 /**
  * Created by jaipr on 25-02-2017.
@@ -25,6 +26,8 @@ public class UserProfileFragment extends Fragment {
     private TextView userAge;
     private TextView userGender;
     private TextView userLocation;
+
+    private RoundedImageView roundedImageView;
 
 
     private User user;
@@ -57,6 +60,7 @@ public class UserProfileFragment extends Fragment {
         userAge=(TextView) view.findViewById(R.id.text_user_age);
         userGender=(TextView) view.findViewById(R.id.text_user_gender);
         userLocation=(TextView) view.findViewById(R.id.text_user_location);
+        roundedImageView=(RoundedImageView) view.findViewById(R.id.user_profile_photo);
 
         SharedPreferences sharedPreferences=getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         String str_userNameHeader=sharedPreferences.getString("FirstName",null)+" "+sharedPreferences.getString("LastName",null);
@@ -72,6 +76,10 @@ public class UserProfileFragment extends Fragment {
         userAge.setText(str_userAge);
         userGender.setText(str_userGender);
         userLocation.setText(str_userLocation);
+
+//        String ch=str_userName.charAt(0)+"";
+//        int resourceId = getActivity().getResources().getIdentifier(ch, "drawable", "com.example.jaipr.stockbuddy");
+//        roundedImageView.setImageResource(resourceId);
     }
 
 }

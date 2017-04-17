@@ -44,6 +44,7 @@ public class GraphActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+        this.setTitle("Prediction");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,9 +61,9 @@ public class GraphActivity extends AppCompatActivity {
         textViewSymbol.setText(symbol);
         textViewPrice.setText("$ " + price);
 
-        SharedPreferences sharedPreferences1 = this.getApplicationContext().getSharedPreferences("StockPrediction", Context.MODE_PRIVATE);
+        SharedPreferences sharedPrefereunces1 = this.getApplicationContext().getSharedPreferences("StockPrediction", Context.MODE_PRIVATE);
         try {
-            jsonObject = new JSONObject(sharedPreferences1.getString("Prediction", null).toString());
+            jsonObject = new JSONObject(sharedPrefereunces1.getString("Prediction", null).toString());
             jsonArray = jsonObject.getJSONArray("data");
 
         } catch (JSONException e) {

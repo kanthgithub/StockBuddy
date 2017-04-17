@@ -1,5 +1,6 @@
 package com.example.jaipr.stockbuddy;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -63,6 +65,9 @@ public class AboutUsActivity extends AppCompatActivity {
 
     public void SendMail(View view)
     {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_VOICEMAIL)
+                != PackageManager.PERMISSION_GRANTED) {}
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
         sendIntent.setType("plain/text");
         sendIntent.setData(Uri.parse("jaiprajapati3@gmail.com"));

@@ -11,6 +11,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -148,10 +149,17 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         if (isValid) {
-            if (isNetworkAvailable()) {
-                new AsynkRegister().execute();
-            } else {
-                Toast.makeText(this, "Connection not available", Toast.LENGTH_LONG).show();
+            CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
+            if(checkBox.isChecked())
+            {
+                if (isNetworkAvailable()) {
+                    new AsynkRegister().execute();
+                } else {
+                    Toast.makeText(this, "Connection not available", Toast.LENGTH_LONG).show();
+                }
+            }
+           else{
+                Toast.makeText(this, "Agree terms and conditions", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -251,10 +259,11 @@ public class SignupActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
             isRegisterSucessFully();
         }
+    }
 
-        public void TermsAndCondition(View view) {
-
-        }
+    public void TermsAndCondition(View view) {
+        Intent intent = new Intent(this, TermsAndConditionActivity.class);
+        startActivity(intent);
     }
     
 }

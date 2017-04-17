@@ -15,9 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="80dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="360dp"
             android:descendantFocusability="beforeDescendants"
             android:focusableInTouchMode="true">
 
@@ -26,7 +26,7 @@
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp"
                 android:src="@drawable/logo" />
@@ -40,7 +40,7 @@
                 android:layout_marginBottom="30dp"
                 android:text="STOCK BUDDY"
                 android:textColor="#ffffff"
-                android:textSize="24sp"
+                android:textSize="40sp"
                 android:textStyle="bold" />
 
             <!--User Email-->
@@ -55,11 +55,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textEmailAddress|textAutoComplete"
                     android:maxLength="50"
                     android:singleLine="true"
                     android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    android:textColorHint="@android:color/white"
+                    android:textSize="32sp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -79,7 +80,8 @@
                     android:maxLength="20"
                     android:singleLine="true"
                     android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    android:textColorHint="@android:color/white"
+                    android:textSize="32sp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -87,14 +89,14 @@
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_login"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
+                android:layout_height="80dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:onClick="Login"
                 android:text="Login"
                 android:textAllCaps="false"
                 android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:textSize="32sp" />
 
             <!--signup Link TextView-->
             <TextView
@@ -107,7 +109,7 @@
                 android:padding="16dp"
                 android:text="No account yet? Create one"
                 android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textSize="24sp" />
         </LinearLayout>
     </ScrollView>
 
